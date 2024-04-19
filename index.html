@@ -3,19 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>File Chooser</title>
+<title>File Upload</title>
 <style>
-
+    ul {
+        list-style: none;
+    }
 </style>
-<script>
-  
-</script>
 </head>
 <body>
+    <input type="file" id="fileInput" onchange="handleFile()">
+    <ul id="fileInfo"></ul>
 
-<div>
-	<input type="file">
-</div>
+    <script>
+        function handleFile() {
+            const fileInput = document.getElementById('fileInput');
+            const fileList = fileInput.files;
 
+            if (fileList.length > 0) {
+                const fileInfo = document.getElementById('fileInfo');
+                fileInfo.innerHTML = ''; // Clear previous info
+
+                for (let i = 0; i < fileList.length; i++) {
+                    const file = fileList[i];
+                    const li = document.createElement('li');
+                    li.innerHTML = `<p><b>Name: ${file.name}</b></p><p>Size: ${file.size} bytes</p><p>Type: ${file.type}</p><p>Last Modified: ${file.lastModifiedDate}</p>`;
+                    fileInfo.appendChild(li);
+                }
+            }
+        }
+    </script>
 </body>
 </html>
