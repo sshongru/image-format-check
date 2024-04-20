@@ -28,6 +28,15 @@
                     const li = document.createElement('li');
                     li.innerHTML = `<p><b>Name: ${file.name}</b></p><p>Size: ${file.size} bytes</p><p>Type: ${file.type}</p><p>Last Modified: ${file.lastModifiedDate}</p>`;
                     fileInfo.appendChild(li);
+
+
+                    // render it if it's an image
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.width = 300;
+                        li.appendChild(img);
+                    }
                 }
             }
         }
