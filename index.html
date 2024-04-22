@@ -11,20 +11,42 @@
 </style>
 </head>
 <body>
-    <input type="file" id="fileInput" onchange="handleFile()">
-    <ul id="fileInfo"></ul>
+	<!-- Generic -->
+	<div>
+		<h1>Generic</h1>
+    	<input type="file" id="genericFileInput"  onchange="handleGenericFile()">
+    	<ul id="genericFileInfo"></ul>
+	</div>
+
+   	<!-- Home -->
+   	<!-- TODO: How do deal with hidden? -->
+	<div>
+		<input hidden="" id="file-input" type="file" tabindex="0" accept="image/png,image/gif,image/jpeg,image/webp,.pdf,application/pdf,.ai,application/vnd.adobe.illustrator,application/postscript,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.ppt,application/vnd.ms-powerpoint,.psd,application/vnd.adobe.photoshop,application/x-photoshop,image/x-photoshop,image/vnd.adobe.photoshop,.psdt,image/vnd.adobe.photoshop,image/png,image/gif,image/jpeg,image/webp,video/3gpp,video/264,video/x-ms-wmv,video/quicktime,video/mp2t,video/mpeg,video/mpeg,video/mts,video/x-m4v,video/mp2t,video/mpeg,video/mpeg,video/mpeg,video/mp4,video/mov,video/x-f4v,video/avi">
+		<ul id="homeFileInfo"></ul>
+	</div>
+
+    <!-- Editor -->
+    <div>
+    	<h1>Editor</h1>
+	    <input type="file" id="ap-local-file-input" multiple="" accept=".ai,application/vnd.adobe.illustrator,application/postscript,.psd,application/vnd.adobe.photoshop,application/x-photoshop,image/x-photoshop,image/vnd.adobe.photoshop,.psdt,image/vnd.adobe.photoshop,audio/mpeg,audio/aac,audio/vnd.dlna.adts,audio/wav,audio/x-wav,audio/m4a,audio/x-m4a,audio/webm,image/gif,image/jpeg,image/jpg,image/png,image/webp,video/3gpp,video/avi,video/x-msvideo,video/x-ms-wmv,video/crm,video/x-f4v,video/mpeg,video/mpeg,video/mpeg,video/mp2t,video/x-m4v,video/mov,video/mpeg,video/mpeg,video/mp4,video/mts,video/quicktime,video/mp2t,video/vnd.dlna.mpeg-tts,video/264,.3gp,.avi,.msvideo,.wmv,.crm,.f4v,.m1v,.m2p,.m2t,.m2ts,.m4v,.mov,.mpeg,.mpg,.mp4,.mts,.quicktime,.ts,.tts,.264,video/*"  onchange="handleEditorFile()">
+	    <ul id="editorFileInfo"></ul>
+	</div>
+
+	<!-- TODO: Quick Actions? -->
+	<!-- TODO: Brands? -->
+	<!-- TODO: Drawing Editor -->
 
     <script>
-        function handleFile() {
-            const fileInput = document.getElementById('fileInput');
-            const fileList = fileInput.files;
+        function handleGenericFile() {
+            const genericFileInput = document.getElementById('genericFileInput');
+            const genericFileList = genericFileInput.files;
 
-            if (fileList.length > 0) {
-                const fileInfo = document.getElementById('fileInfo');
-                fileInfo.innerHTML = ''; // Clear previous info
+            if (genericFileList.length > 0) {
+                const fileInfo = document.getElementById('genericFileInfo');
+                fileInfo.innerHTML = '';
 
-                for (let i = 0; i < fileList.length; i++) {
-                    const file = fileList[i];
+                for (let i = 0; i < genericFileList.length; i++) {
+                    const file = genericFileList[i];
                     const li = document.createElement('li');
                     li.innerHTML = `<p><b>Name: ${file.name}</b></p><p>Size: ${file.size} bytes</p><p>Type: ${file.type}</p><p>Last Modified: ${file.lastModifiedDate}</p>`;
                     fileInfo.appendChild(li);
@@ -34,7 +56,33 @@
                     if (file.type.startsWith('image/')) {
                         const img = document.createElement('img');
                         img.src = URL.createObjectURL(file);
-                        img.width = 300;
+                        img.width = 200;
+                        li.appendChild(img);
+                    }
+                }
+            }
+        }
+
+        function handleEditorFile() {
+            const editorFileInput = document.getElementById('ap-local-file-input');
+            const editorFileList = editorFileInput.files;
+
+            if (editorFileList.length > 0) {
+                const fileInfo = document.getElementById('editorFileInfo');
+                fileInfo.innerHTML = '';
+
+                for (let i = 0; i < editorFileList.length; i++) {
+                    const file = editorFileList[i];
+                    const li = document.createElement('li');
+                    li.innerHTML = `<p><b>Name: ${file.name}</b></p><p>Size: ${file.size} bytes</p><p>Type: ${file.type}</p><p>Last Modified: ${file.lastModifiedDate}</p>`;
+                    fileInfo.appendChild(li);
+
+
+                    // render it if it's an image
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.width = 200;
                         li.appendChild(img);
                     }
                 }
