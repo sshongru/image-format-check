@@ -19,9 +19,10 @@
 	</div>
 
    	<!-- Home -->
-   	<!-- TODO: How do deal with hidden? -->
+   	<!-- TODO: Removed hidden="" -->
 	<div>
-		<input hidden="" id="file-input" type="file" tabindex="0" accept="image/png,image/gif,image/jpeg,image/webp,.pdf,application/pdf,.ai,application/vnd.adobe.illustrator,application/postscript,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.ppt,application/vnd.ms-powerpoint,.psd,application/vnd.adobe.photoshop,application/x-photoshop,image/x-photoshop,image/vnd.adobe.photoshop,.psdt,image/vnd.adobe.photoshop,image/png,image/gif,image/jpeg,image/webp,video/3gpp,video/264,video/x-ms-wmv,video/quicktime,video/mp2t,video/mpeg,video/mpeg,video/mts,video/x-m4v,video/mp2t,video/mpeg,video/mpeg,video/mpeg,video/mp4,video/mov,video/x-f4v,video/avi">
+		<h1>Home</h1>
+		<input  id="file-input" type="file" tabindex="0" accept="image/png,image/gif,image/jpeg,image/webp,.pdf,application/pdf,.ai,application/vnd.adobe.illustrator,application/postscript,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.ppt,application/vnd.ms-powerpoint,.psd,application/vnd.adobe.photoshop,application/x-photoshop,image/x-photoshop,image/vnd.adobe.photoshop,.psdt,image/vnd.adobe.photoshop,image/png,image/gif,image/jpeg,image/webp,video/3gpp,video/264,video/x-ms-wmv,video/quicktime,video/mp2t,video/mpeg,video/mpeg,video/mts,video/x-m4v,video/mp2t,video/mpeg,video/mpeg,video/mpeg,video/mp4,video/mov,video/x-f4v,video/avi"   onchange="handleHomeFile()">
 		<ul id="homeFileInfo"></ul>
 	</div>
 
@@ -47,6 +48,32 @@
 
                 for (let i = 0; i < genericFileList.length; i++) {
                     const file = genericFileList[i];
+                    const li = document.createElement('li');
+                    li.innerHTML = `<p><b>Name: ${file.name}</b></p><p>Size: ${file.size} bytes</p><p>Type: ${file.type}</p><p>Last Modified: ${file.lastModifiedDate}</p>`;
+                    fileInfo.appendChild(li);
+
+
+                    // render it if it's an image
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.width = 200;
+                        li.appendChild(img);
+                    }
+                }
+            }
+        }
+
+        function handleHomeFile() {
+            const homeFileInput = document.getElementById('file-input');
+            const homeFileList = homeFileInput.files;
+
+            if (homeFileList.length > 0) {
+                const fileInfo = document.getElementById('homeFileInfo');
+                fileInfo.innerHTML = '';
+
+                for (let i = 0; i < homeFileList.length; i++) {
+                    const file = homeFileList[i];
                     const li = document.createElement('li');
                     li.innerHTML = `<p><b>Name: ${file.name}</b></p><p>Size: ${file.size} bytes</p><p>Type: ${file.type}</p><p>Last Modified: ${file.lastModifiedDate}</p>`;
                     fileInfo.appendChild(li);
